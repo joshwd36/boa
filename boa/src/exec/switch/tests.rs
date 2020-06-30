@@ -152,7 +152,7 @@ fn string_switch() {
         
         a;
     "#;
-    assert_eq!(&exec(scenario), "world");
+    assert_eq!(&exec(scenario), "\"world\"");
 }
 
 #[test]
@@ -195,6 +195,6 @@ fn bigger_switch_example() {
             i
         );
 
-        assert_eq!(&exec(&scenario), val);
+        assert_eq!(exec(&scenario), format!("\"{}\"", val));
     }
 }

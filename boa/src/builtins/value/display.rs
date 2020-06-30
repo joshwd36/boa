@@ -176,7 +176,7 @@ impl Display for Value {
                 Some(description) => write!(f, "Symbol({})", description),
                 None => write!(f, "Symbol()"),
             },
-            Self::String(ref v) => write!(f, "{}", v),
+            Self::String(ref v) => write!(f, "\"{}\"", v),
             Self::Rational(v) => write!(
                 f,
                 "{}",

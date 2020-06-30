@@ -15,7 +15,7 @@ fn property_accessor_member_expression_dot_notation_on_string_literal() {
         typeof 'asd'.matchAll;
         "#;
 
-    assert_eq!(&exec(scenario), "function");
+    assert_eq!(&exec(scenario), "\"function\"");
 }
 
 #[test]
@@ -24,7 +24,7 @@ fn property_accessor_member_expression_bracket_notation_on_string_literal() {
         typeof 'asd'['matchAll'];
         "#;
 
-    assert_eq!(&exec(scenario), "function");
+    assert_eq!(&exec(scenario), "\"function\"");
 }
 
 #[test]
@@ -234,7 +234,7 @@ fn early_return() {
         }
         outer_fnct()
         "#;
-    assert_eq!(&exec(early_return), "outer");
+    assert_eq!(&exec(early_return), "\"outer\"");
 }
 
 #[test]
@@ -364,7 +364,7 @@ fn for_loop() {
         }
         b
         "#;
-    assert_eq!(&exec(simple), "hello");
+    assert_eq!(&exec(simple), "\"hello\"");
 
     let without_init_and_inc_step = r#"
         let a = 0;
@@ -453,7 +453,7 @@ fn typeof_string() {
         const a = String();
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_string), "string");
+    assert_eq!(&exec(typeof_string), "\"string\"");
 }
 
 #[test]
@@ -462,7 +462,7 @@ fn typeof_int() {
         let a = 5;
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_int), "number");
+    assert_eq!(&exec(typeof_int), "\"number\"");
 }
 
 #[test]
@@ -471,7 +471,7 @@ fn typeof_rational() {
         let a = 0.5;
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_rational), "number");
+    assert_eq!(&exec(typeof_rational), "\"number\"");
 }
 
 #[test]
@@ -480,7 +480,7 @@ fn typeof_undefined() {
         let a = undefined;
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_undefined), "undefined");
+    assert_eq!(&exec(typeof_undefined), "\"undefined\"");
 }
 
 #[test]
@@ -488,7 +488,7 @@ fn typeof_undefined_directly() {
     let typeof_undefined = r#"
         typeof undefined;
     "#;
-    assert_eq!(&exec(typeof_undefined), "undefined");
+    assert_eq!(&exec(typeof_undefined), "\"undefined\"");
 }
 
 #[test]
@@ -497,7 +497,7 @@ fn typeof_boolean() {
         let a = true;
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_boolean), "boolean");
+    assert_eq!(&exec(typeof_boolean), "\"boolean\"");
 }
 
 #[test]
@@ -506,7 +506,7 @@ fn typeof_null() {
         let a = null;
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_null), "object");
+    assert_eq!(&exec(typeof_null), "\"object\"");
 }
 
 #[test]
@@ -515,7 +515,7 @@ fn typeof_object() {
         let a = {};
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_object), "object");
+    assert_eq!(&exec(typeof_object), "\"object\"");
 }
 
 #[test]
@@ -524,7 +524,7 @@ fn typeof_symbol() {
         let a = Symbol();
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_symbol), "symbol");
+    assert_eq!(&exec(typeof_symbol), "\"symbol\"");
 }
 
 #[test]
@@ -533,7 +533,7 @@ fn typeof_function() {
         let a = function(){};
         typeof a;
     "#;
-    assert_eq!(&exec(typeof_function), "function");
+    assert_eq!(&exec(typeof_function), "\"function\"");
 }
 
 #[test]
@@ -593,7 +593,7 @@ fn unary_void() {
         const b = void test() + '';
         a + b
     "#;
-    assert_eq!(&exec(void_invocation), "42undefined");
+    assert_eq!(&exec(void_invocation), "\"42undefined\"");
 }
 
 #[test]
@@ -603,28 +603,28 @@ fn unary_delete() {
         const b = delete a + '';
         a + b
     "#;
-    assert_eq!(&exec(delete_var), "5false");
+    assert_eq!(&exec(delete_var), "\"5false\"");
 
     let delete_prop = r#"
         const a = { b: 5 };
         const c = delete a.b + '';
         a.b + c
     "#;
-    assert_eq!(&exec(delete_prop), "undefinedtrue");
+    assert_eq!(&exec(delete_prop), "\"undefinedtrue\"");
 
     let delete_not_existing_prop = r#"
         const a = { b: 5 };
         const c = delete a.c + '';
         a.b + c
     "#;
-    assert_eq!(&exec(delete_not_existing_prop), "5false");
+    assert_eq!(&exec(delete_not_existing_prop), "\"5false\"");
 
     let delete_field = r#"
         const a = { b: 5 };
         const c = delete a['b'] + '';
         a.b + c
     "#;
-    assert_eq!(&exec(delete_field), "undefinedtrue");
+    assert_eq!(&exec(delete_field), "\"undefinedtrue\"");
 
     let delete_object = r#"
         const a = { b: 5 };

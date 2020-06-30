@@ -76,13 +76,13 @@ fn join() {
     eprintln!("{}", forward(&mut engine, init));
     // Empty
     let empty = forward(&mut engine, "empty.join('.')");
-    assert_eq!(empty, String::from(""));
+    assert_eq!(&empty, "\"\"");
     // One
     let one = forward(&mut engine, "one.join('.')");
-    assert_eq!(one, String::from("a"));
+    assert_eq!(&one, "\"a\"");
     // Many
     let many = forward(&mut engine, "many.join('.')");
-    assert_eq!(many, String::from("a.b.c"));
+    assert_eq!(&many, "\"a.b.c\"");
 }
 
 #[test]
@@ -97,13 +97,13 @@ fn to_string() {
     eprintln!("{}", forward(&mut engine, init));
     // Empty
     let empty = forward(&mut engine, "empty.toString()");
-    assert_eq!(empty, String::from(""));
+    assert_eq!(&empty, "\"\"");
     // One
     let one = forward(&mut engine, "one.toString()");
-    assert_eq!(one, String::from("a"));
+    assert_eq!(&one, "\"a\"");
     // Many
     let many = forward(&mut engine, "many.toString()");
-    assert_eq!(many, String::from("a,b,c"));
+    assert_eq!(&many, "\"a,b,c\"");
 }
 
 #[test]

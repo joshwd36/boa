@@ -25,32 +25,33 @@ fn check_regexp_constructor_is_function() {
 }
 
 // TODO: uncomment this test when property getters are supported
+#[test]
+#[ignore]
+fn flags() {
+    let realm = Realm::create();
+    let mut engine = Interpreter::new(realm);
+    let init = r#"
+               var re_gi = /test/gi;
+               var re_sm = /test/sm;
+               "#;
 
-//    #[test]
-//    fn flags() {
-//        let mut engine = Interpreter::new();
-//        let init = r#"
-//                var re_gi = /test/gi;
-//                var re_sm = /test/sm;
-//                "#;
-//
-//        eprintln!("{}", forward(&mut engine, init));
-//        assert_eq!(forward(&mut engine, "re_gi.global"), "true");
-//        assert_eq!(forward(&mut engine, "re_gi.ignoreCase"), "true");
-//        assert_eq!(forward(&mut engine, "re_gi.multiline"), "false");
-//        assert_eq!(forward(&mut engine, "re_gi.dotAll"), "false");
-//        assert_eq!(forward(&mut engine, "re_gi.unicode"), "false");
-//        assert_eq!(forward(&mut engine, "re_gi.sticky"), "false");
-//        assert_eq!(forward(&mut engine, "re_gi.flags"), "gi");
-//
-//        assert_eq!(forward(&mut engine, "re_sm.global"), "false");
-//        assert_eq!(forward(&mut engine, "re_sm.ignoreCase"), "false");
-//        assert_eq!(forward(&mut engine, "re_sm.multiline"), "true");
-//        assert_eq!(forward(&mut engine, "re_sm.dotAll"), "true");
-//        assert_eq!(forward(&mut engine, "re_sm.unicode"), "false");
-//        assert_eq!(forward(&mut engine, "re_sm.sticky"), "false");
-//        assert_eq!(forward(&mut engine, "re_sm.flags"), "ms");
-//    }
+    eprintln!("{}", forward(&mut engine, init));
+    assert_eq!(forward(&mut engine, "re_gi.global"), "true");
+    assert_eq!(forward(&mut engine, "re_gi.ignoreCase"), "true");
+    assert_eq!(forward(&mut engine, "re_gi.multiline"), "false");
+    assert_eq!(forward(&mut engine, "re_gi.dotAll"), "false");
+    assert_eq!(forward(&mut engine, "re_gi.unicode"), "false");
+    assert_eq!(forward(&mut engine, "re_gi.sticky"), "false");
+    assert_eq!(forward(&mut engine, "re_gi.flags"), "\"gi\"");
+
+    assert_eq!(forward(&mut engine, "re_sm.global"), "false");
+    assert_eq!(forward(&mut engine, "re_sm.ignoreCase"), "false");
+    assert_eq!(forward(&mut engine, "re_sm.multiline"), "true");
+    assert_eq!(forward(&mut engine, "re_sm.dotAll"), "true");
+    assert_eq!(forward(&mut engine, "re_sm.unicode"), "false");
+    assert_eq!(forward(&mut engine, "re_sm.sticky"), "false");
+    assert_eq!(forward(&mut engine, "re_sm.flags"), "\"ms\"");
+}
 
 #[test]
 fn last_index() {
@@ -78,13 +79,16 @@ fn exec() {
         "#;
 
     eprintln!("{}", forward(&mut engine, init));
-    assert_eq!(forward(&mut engine, "result[0]"), "Quick Brown Fox Jumps");
-    assert_eq!(forward(&mut engine, "result[1]"), "Brown");
-    assert_eq!(forward(&mut engine, "result[2]"), "Jumps");
+    assert_eq!(
+        forward(&mut engine, "result[0]"),
+        "\"Quick Brown Fox Jumps\""
+    );
+    assert_eq!(forward(&mut engine, "result[1]"), "\"Brown\"");
+    assert_eq!(forward(&mut engine, "result[2]"), "\"Jumps\"");
     assert_eq!(forward(&mut engine, "result.index"), "4");
     assert_eq!(
         forward(&mut engine, "result.input"),
-        "The Quick Brown Fox Jumps Over The Lazy Dog"
+        "\"The Quick Brown Fox Jumps Over The Lazy Dog\""
     );
 }
 
@@ -95,15 +99,15 @@ fn to_string() {
 
     assert_eq!(
         forward(&mut engine, "(new RegExp('a+b+c')).toString()"),
-        "/a+b+c/"
+        "\"/a+b+c/\""
     );
     assert_eq!(
         forward(&mut engine, "(new RegExp('bar', 'g')).toString()"),
-        "/bar/g"
+        "\"/bar/g\""
     );
     assert_eq!(
         forward(&mut engine, "(new RegExp('\\\\n', 'g')).toString()"),
-        "/\\n/g"
+        "\"/\\n/g\""
     );
-    assert_eq!(forward(&mut engine, "/\\n/g.toString()"), "/\\n/g");
+    assert_eq!(forward(&mut engine, "/\\n/g.toString()"), "\"/\\n/g\"");
 }
