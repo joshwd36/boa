@@ -523,8 +523,11 @@ pub fn dir(this: &Value, args: &[Value], _: &mut Interpreter) -> ResultValue {
     Ok(Value::undefined())
 }
 
-/// Create a new `console` object
-pub fn create(global: &Value) -> Value {
+/// Initialise the `console` object on the global object.
+#[inline]
+pub fn init(global: &Value) -> (&str, Value) {
+    let _timer = BoaProfiler::global().start_event("console", "init");
+
     let console = Value::new_object(Some(global));
 
     make_builtin_fn(assert, "assert", &console, 0);
@@ -549,13 +552,5 @@ pub fn create(global: &Value) -> Value {
 
     console.set_internal_state(ConsoleState::default());
 
-    console
-}
-
-/// Initialise the `console` object on the global object.
-#[inline]
-pub fn init(global: &Value) -> (&str, Value) {
-    let _timer = BoaProfiler::global().start_event("console", "init");
-
-    ("console", create(global))
+    ("console", console)
 }
